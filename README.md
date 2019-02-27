@@ -2,7 +2,15 @@
 
 This is a sample application for an idea I had that utilizes QR codes.
 
-The application contains a QR code with a structured json response. Install node modules with `npm i` and start the application with `npm start`. The application will load on `localhost:3000` and request camera permissions.
+The application contains a QR code with a structured json response. Install node modules with:
+
+`npm i` 
+
+and start the application with 
+
+`npm start` 
+
+The application will load on `localhost:3000` and request camera permissions.
 
 Once running, show the `kevin_qr.png` image to the camera and it will populate state and render.
 
