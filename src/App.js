@@ -1,49 +1,137 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import QrReader from "react-qr-reader";
-import "./App.css";
+import {
+	Box,
+	Button,
+	Collapsible,
+	Heading,
+	Grommet,
+	ResponsiveContext
+} from "grommet";
+import { UserExpert, UserNew } from "grommet-icons";
+
+const AppBar = props => (
+	<Box
+		tag="header"
+		direction="row"
+		align="center"
+		justify="between"
+		background="brand"
+		pad={{ left: "medium", right: "small", vertical: "small" }}
+		elevation="medium"
+		style={{ zIndex: "1" }}
+		{...props}
+	/>
+);
 
 class App extends Component {
 	state = {
-		// result: "No Result"
+		showSidebar: false,
 		dataObject: "null"
 	};
 
 	handleScan = data => {
-		console.log(JSON.parse(data))
 		if (data) {
-			let dataObject = JSON.parse(data)
-			this.setState({ dataObject });
+			let dataObject = JSON.parse(data);
+			this.setState({ dataObject, showSidebar: true });
 		}
-		console.log('state', this.state)
+		console.log("state", this.state);
 	};
 
 	handleError = err => {
 		console.log("there was an error", err);
 	};
+
 	render() {
+		const { showSidebar } = this.state;
+		const theme = {
+			global: {
+				colors: {
+					brand: "#228BE6"
+				},
+				font: {
+					family: "Roboto",
+					size: "14px",
+					height: "20px"
+				}
+			}
+		};
+
+		var fullName = `${this.state.dataObject.first_name} ${
+			this.state.dataObject.last_name
+		}`;
+		var headerText =
+			this.state.dataObject !== "null"
+				? `User Scanned: ${fullName}`
+				: "Scan a Guests QR";
+
 		return (
-			<div className="App">
-				<header className="App-header">
-					<p>
-						QR SCANNER
-					</p>
-					<QrReader
-						delay={1000}
-						onError={this.handleError}
-						onScan={this.handleScan}
-						style={{ width: "40%" }}
-					/>
-					{/* <p>{this.state.result}</p> */}
-					<p>ID: {this.state.dataObject.id}</p>
-					<p>First Name: {this.state.dataObject.first_name}</p>
-					<p>Last Name: {this.state.dataObject.last_name}</p>
-					<a href={this.state.dataObject.twitter}>Twitter</a>
-					<a href={this.state.dataObject.instagram}>Instagram</a>
-					<a href={this.state.dataObject.github}>Github</a>
-				</header>
-				
-			</div>
+			<Grommet theme={theme} full>
+				<ResponsiveContext.Consumer>
+					{size => (
+						<Box fill>
+							<AppBar>
+								<Heading level="3" margin="none">
+									{headerText}
+								</Heading>
+								<Button
+									icon={
+										this.state.dataObject !== "null" ? (
+											<UserExpert />
+										) : (
+											<UserNew />
+										)
+									}
+									onClick={() =>
+										this.setState(prevState => ({
+											showSidebar: !prevState.showSidebar
+										}))
+									}
+								/>
+							</AppBar>
+							<Box direction="row" flex overflow={{ horizontal: "hidden" }}>
+								<Box flex align="center" justify="center">
+									<QrReader
+										delay={1000}
+										onError={this.handleError}
+										onScan={this.handleScan}
+										style={{ width: "20%" }}
+										showViewFinder={false}
+									/>
+								</Box>
+								{size !== "small" && (
+									<Collapsible direction="horizontal" open={showSidebar}>
+										<Box
+											flex
+											width="medium"
+											background="light-2"
+											elevation="small"
+											align="center"
+											justify="center"
+										>
+											<div>
+												<p>Guest ID: {this.state.dataObject.id}</p>
+												<p>{fullName}</p>
+												<li>
+													<a href={this.state.dataObject.twitter}>Twitter</a>
+												</li>
+												<li>
+													<a href={this.state.dataObject.instagram}>
+														Instagram
+													</a>
+												</li>
+												<li>
+													<a href={this.state.dataObject.github}>Github</a>
+												</li>
+											</div>
+										</Box>
+									</Collapsible>
+								)}
+							</Box>
+						</Box>
+					)}
+				</ResponsiveContext.Consumer>
+			</Grommet>
 		);
 	}
 }

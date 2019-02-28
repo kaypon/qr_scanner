@@ -1,4 +1,6 @@
 {
+	"_comment": "this is the sample json used in the qr",
+	"qr_source": "https://www.the-qrcode-generator.com/",
 	"id": 1,
 	"first_name": "Kevin",
 	"last_name": "van der Poll",
