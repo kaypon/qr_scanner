@@ -12,7 +12,11 @@ and start the application with
 
 The application will load on `localhost:3000` and request camera permissions.
 
-Once running, show the `kevin_qr.png` image to the camera and it will populate state and render.
+Once running, run the ruby qr generator with the command:
+
+`ruby qr_gen.rb`
+
+Answer the questions prompted in terminal and a QR code should open (if you're using Mac, no clue if this works on windows). Save that image and display it to the QR scanner at `localhost:3000`
 
 ## USE CASE
 

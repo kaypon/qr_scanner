@@ -65,6 +65,8 @@ class App extends Component {
 				? `User Scanned: ${fullName}`
 				: "Scan a Guests QR";
 
+				console.log(this.state.dataObject.twitter_photo)
+
 		return (
 			<Grommet theme={theme} full>
 				<ResponsiveContext.Consumer>
@@ -110,6 +112,7 @@ class App extends Component {
 											justify="center"
 										>
 											<div>
+												{/* <img src={this.state.dataObject.twitter_photo} alt="alttaghere"></img> */}
 												<p>Guest ID: {this.state.dataObject.id}</p>
 												<p>{fullName}</p>
 												<li>
