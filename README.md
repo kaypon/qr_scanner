@@ -1,4 +1,4 @@
-# STATELESS QR READER
+# Grommet QR READER
 
 This is a sample application for an idea I had that utilizes QR codes.
 
